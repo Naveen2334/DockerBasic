@@ -1,3 +1,84 @@
+##Docker Guide for Product Service
+
+#Key Docker Concepts
+
+#Docker Image
+
+A Docker image is a lightweight, standalone, and executable package that includes everything required to run an application—such as the code, runtime, dependencies, environment variables, and configuration files. It serves as a blueprint for creating a running environment.
+
+#Docker Container
+
+A Docker container is a running instance of a Docker image. Similar to how an object is an instance of a class in programming, a container is an instance of an image. Multiple containers can be created from the same image, each running independently.
+
+#Dockerfile
+
+A Dockerfile is a text file that contains a series of commands to define how a Docker image should be built. Each command represents a step in setting up the environment. For example, a Dockerfile can specify the base image, copy application files, and define the execution command.
+
+Example Dockerfile
+
+FROM openjdk:17
+COPY target/product-service.jar /app.jar
+CMD ["java", "-jar", "/app.jar"]
+
+#Setting Up and Using Docker
+
+#1. Creating a Dockerfile
+
+The Dockerfile defines how to build the environment for your application. In the example above:
+
+We use openjdk:17 as the base image.
+
+Copy the compiled JAR file (product-service.jar) into the container.
+
+Specify the command to run the application.
+
+#2. Building a Docker Image
+
+Once the Dockerfile is ready, you can build a Docker image using the following command:
+
+docker build -t your-username/product-service:1.0 .
+
+The -t flag assigns a tag (name) to the image, making it easy to reference later.
+
+#3. Running a Docker Container
+
+After building the image, you can create and run a container from it:
+
+docker run -d -p 8080:8080 your-username/product-service:1.0
+
+-p 8080:8080 maps the container’s port 8080 to the host machine’s port 8080, making the service accessible.
+
+-d runs the container in detached mode, meaning it runs in the background.
+
+#4. Pushing the Docker Image to Docker Hub
+
+To share the image, you can push it to Docker Hub:
+
+docker push your-username/product-service:1.0
+
+Once uploaded, anyone can pull and run the image on their machine.
+
+#5. Pulling and Running the Image from Docker Hub
+
+To run the same image on another machine:
+
+docker pull your-username/product-service:1.0
+docker run -d -p 8080:8080 your-username/product-service:1.0
+
+3Additional Commands
+
+List running containers: docker ps
+
+Stop a container: docker stop <container_id>
+
+Remove a container: docker rm <container_id>
+
+Remove an image: docker rmi your-username/product-service:1.0
+
+
+
+
+
 Here’s a complete step-by-step guide for creating a Dockerized Spring Boot application, running it, and pushing it to Docker Hub. I’ve included all the commands that are important for developers, as requested.
 Step 1: Create the Dockerfile in your application folder
 
